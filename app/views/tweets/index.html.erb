@@ -1,0 +1,8 @@
+<% @tweets.each do |tweet| %>
+  <p>
+      <%= tweet.message %>
+  </p>
+<% end %>
+<P>
+    <%= link_to 'ツイートする', controller: 'tweets', action: 'new' %>
+</P>

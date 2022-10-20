@@ -1,0 +1,10 @@
+<% @users.each do |user| %>
+    <p>
+        <%= user.uid %>
+        <%= user.pass %>
+        <%= link_to 'ユーザーの削除', "/user/#{user.id}", method: :delete %>
+    </p>
+<% end %>
+<p>
+    <%= link_to '新規登録', controller: 'user', action: 'new' %>
+</p>
