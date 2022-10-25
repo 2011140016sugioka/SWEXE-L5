@@ -1,6 +1,6 @@
 class TopController < ApplicationController
     def main
-        if session[:login_uid]
+        if session[:uid]
             render "main"
         else
             render "login"
@@ -9,17 +9,21 @@ class TopController < ApplicationController
     
     def login
         user = User.find_by(uid: params[:uid])
-        ps = BCrypt::Password.new(user.pass)  #newは認証、createは生成
-        if ps == params[:pass]
-            session[:login_uid] = user.uid   #, pass: params[:pass]
-            redirect_to root_path
+        if user
+          login_password = BCrypt::Password.new(user.pass)  #newは認証、createは生成
+          if login_password == params[:pass]
+            session[:uid] = user.uid   #, pass: params[:pass]
+            redirect_to top_main_path
+          else
+            render 'login'
+          end
         else
-            render 'error'
+            render 'login'
         end
     end
     
     def logout
-        session.delete(:login_uid)
-        redirect_to root_path
+        session.delete(:uid)
+        redirect_to top_main_path
     end 
 end

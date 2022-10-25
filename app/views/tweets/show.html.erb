@@ -1,0 +1,11 @@
+<P>
+    <strong>ツイート：</strong>
+    <%= @tweet.message %>
+</P>
+
+<P>
+    <strong>経過分数：</strong>
+    <%= (Time.current.min - @tweet.tdate.min).abs %>分前にツイートしました
+</P>
+
+<%= link_to '戻る', '/' %>

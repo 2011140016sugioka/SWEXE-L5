@@ -8,18 +8,19 @@ class TweetsController < ApplicationController
     end
     
     def create
-        @tweet = Tweet.new(message: params[:tweet][:message])
+        user = User.find_by(uid: session[:uid])
+        @tweet = Tweet.new(message: params[:tweet][:message], tdate: Time.current, user_id: user.id)
         if @tweet.save
-            redirect_to '/'
+            redirect_to tweets_path
         else
-            render 'new'
+            render new_tweet_path
         end
     end
     
     def destroy
         tweet = Tweet.find(params[:id])
         tweet.destroy
-        redirect_to '/'
+        redirect_to tweets_path
     end
     
 end
