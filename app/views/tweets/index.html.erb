@@ -1,9 +1,9 @@
 <% @tweets.each do |e| %>
   <p>
       <%= e.message %>
-      <%= e.tdate %><br>
-      <%= (Time.current.min - e.tdate.min).abs %>分前にツイートしました
-      <%= link_to 'ツイートの削除', tweet_path(e.id), method: :delete %>
+      <%= (Time.current - e.tdate).to_i / 60 %>分前
+      <%= link_to '削除', tweet_path(e.id), method: :delete %>
+      
       <% if session[:uid] %>
         <% if e.likes.count == 0 %>
           <%= link_to '♡', likes_path(tweet_id: e.id), method: :post %>
@@ -13,8 +13,9 @@
       <% end %>
   </p>
 <% end %>
+
 <% if session[:uid] %>
-  <%= link_to 'ツイートする', new_tweet_path %>
+  <%= link_to '新規追加', new_tweet_path %>
 <% else %>
-  <%= link_to 'ログイン', top_main_path %>
+  <% link_to 'ログイン', top_main_path %>
 <% end %>
